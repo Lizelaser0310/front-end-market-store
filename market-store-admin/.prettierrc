@@ -1,0 +1,6 @@
+{
+  "semi": true,
+  "arrowParens": "always",
+  "doubleQuote": true,
+  "trailingComma": "all"
+}
