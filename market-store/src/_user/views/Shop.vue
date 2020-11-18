@@ -4,21 +4,25 @@
       <div class="row">
         <div class="col-md-3 col-sm-3 col-xs-12">
           <v-card outlined>
-            <v-card-title>Filters</v-card-title>
+            <v-card-title>Categorias</v-card-title>
             <v-divider></v-divider>
-            <template>
-              <v-treeview
-                :items="items"
-                :open="[1]"
-                :active="[5]"
-                :selected-color="'#fff'"
-                activatable
-                open-on-click
-                dense
-              ></v-treeview>
-            </template>
+            <v-list>
+              <v-list-item-group
+                v-model="currentCategory"
+                @change="fetchPageByCategory"
+                color="primary"
+              >
+                <v-list-item v-for="item in categorias" :key="item.id">
+                  <v-list-item-content>
+                    <v-list-item-title
+                      v-text="item.denominacion"
+                    ></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
             <v-divider></v-divider>
-            <v-card-title>Price</v-card-title>
+            <v-card-title>Precio</v-card-title>
             <v-range-slider
               v-model="range"
               :max="max"
@@ -51,7 +55,7 @@
               </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-card-title class="pb-0">Customer Rating</v-card-title>
+            <v-card-title class="pb-0">Puntuaciones</v-card-title>
             <v-container class="pt-0" fluid>
               <v-checkbox
                 append-icon="mdi-star"
@@ -78,17 +82,6 @@
                 dense
               ></v-checkbox>
             </v-container>
-            <v-divider></v-divider>
-            <v-card-title class="pb-0">Size</v-card-title>
-            <v-container class="pt-0" fluid>
-              <v-checkbox label="XS" hide-details dense></v-checkbox>
-              <v-checkbox label="S" hide-details dense></v-checkbox>
-              <v-checkbox label="M" hide-details dense></v-checkbox>
-              <v-checkbox label="L" hide-details dense></v-checkbox>
-              <v-checkbox label="XL" hide-details dense></v-checkbox>
-              <v-checkbox label="XXL" hide-details dense></v-checkbox>
-              <v-checkbox label="XXXL" hide-details dense></v-checkbox>
-            </v-container>
           </v-card>
         </div>
         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -96,7 +89,7 @@
 
           <v-row dense>
             <v-col cols="12" sm="8" class="pl-6 pt-6">
-              <small>Showing 1-12 of 200 products</small>
+              <small>Viendo 1-12 de 20 productos</small>
             </v-col>
             <v-col cols="12" sm="4">
               <v-select
@@ -115,8 +108,8 @@
           <div class="row text-center">
             <div
               class="col-md-3 col-sm-6 col-xs-12"
+              v-for="pro in paginator.listado"
               :key="pro.id"
-              v-for="pro in products"
             >
               <v-hover v-slot:default="{ hover }">
                 <v-card class="mx-auto" color="grey lighten-4" max-width="600">
@@ -124,7 +117,7 @@
                     class="white--text align-end"
                     :aspect-ratio="16 / 9"
                     height="200px"
-                    :src="pro.src"
+                    :src="pro.imagen"
                   >
                     <!--<v-card-title>{{pro.type}} </v-card-title>-->
                     <v-expand-transition>
@@ -133,7 +126,11 @@
                         class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
                         style="height: 100%"
                       >
-                        <v-btn v-if="hover" href="/product" class outlined
+                        <v-btn
+                          v-if="hover"
+                          :href="'/producto/' + pro.id"
+                          class
+                          outlined
                           >VIEW</v-btn
                         >
                       </div>
@@ -141,18 +138,24 @@
                   </v-img>
                   <v-card-text class="text--primary">
                     <div>
-                      <a href="/product" style="text-decoration: none">{{
-                        pro.name
-                      }}</a>
+                      <a
+                        :href="'/producto/' + pro.id"
+                        style="text-decoration: none"
+                        >{{ pro.nombre }}</a
+                      >
                     </div>
-                    <div>${{ pro.price }}</div>
+                    <div>${{ pro.precio }}</div>
                   </v-card-text>
                 </v-card>
               </v-hover>
             </div>
           </div>
           <div class="text-center mt-12">
-            <v-pagination v-model="page" :length="6"></v-pagination>
+            <v-pagination
+              v-model="paginator.paginaActual"
+              :length="paginator.totalPaginas"
+              @input="fetchPage"
+            ></v-pagination>
           </div>
         </div>
       </div>
@@ -173,15 +176,17 @@
 export default {
   data: () => ({
     range: [0, 10000],
-    select: "Popularity",
-    options: [
-      "Default",
-      "Popularity",
-      "Relevance",
-      "Price: Low to High",
-      "Price: High to Low",
-    ],
-    page: 1,
+    select: "Precio: Menor a Mayor",
+    options: ["Precio: Menor a Mayor", "Precio: Mayor a Menor"],
+    currentCategory: 0,
+    paginator: {
+      registrosPorPagina: 0,
+      totalRegistros: 0,
+      totalPaginas: 0,
+      paginaActual: 1,
+      listado: [],
+    },
+    categorias: [],
     breadcrums: [
       {
         text: "Home",
@@ -189,140 +194,51 @@ export default {
         href: "breadcrumbs_home",
       },
       {
-        text: "Clothing",
+        text: "Tienda",
         disabled: false,
         href: "breadcrumbs_clothing",
       },
       {
-        text: "T-Shirts",
-        disabled: true,
+        text: "Verduras",
+        disabled: false,
         href: "breadcrumbs_shirts",
       },
     ],
     min: 0,
     max: 10000,
-    items: [
-      {
-        id: 1,
-        name: "Pescados y mariscos",
-        children: [
-          { id: 5, name: "Shirts" },
-          { id: 6, name: "Tops" },
-          { id: 7, name: "Tunics" },
-          { id: 8, name: "Bodysuit" },
-        ],
-      },
-      {
-        id: 2,
-        name: "Carnes y pollos",
-        children: [
-          { id: 2, name: "Casuals" },
-          { id: 3, name: "Formals" },
-          { id: 4, name: "Sneakers" },
-        ],
-      },
-      {
-        id: 3,
-        name: "Frutas y verduras",
-        children: [
-          { id: 2, name: "Casuals" },
-          { id: 3, name: "Formals" },
-          { id: 4, name: "Sneakers" },
-        ],
-      },
-      {
-        id: 4,
-        name: "Quesos y fiambres",
-        children: [
-          { id: 2, name: "Casuals" },
-          { id: 3, name: "Formals" },
-          { id: 4, name: "Sneakers" },
-        ],
-      },
-      {
-        id: 5,
-        name: "Lácteos y huevos",
-        children: [
-          { id: 2, name: "Casuals" },
-          { id: 3, name: "Formals" },
-          { id: 4, name: "Sneakers" },
-        ],
-      },
-    ],
-    products: [
-      {
-        id: 1,
-        name: "PAPA BLANCA",
-        price: "18.00",
-        src: require("@/assets/img/products/product5.jpg"),
-      },
-      {
-        id: 2,
-        name: "CIRUELO",
-        price: "40.00",
-        src: require("@/assets/img/products/product6.jpg"),
-      },
-      {
-        id: 3,
-        name: "UVA",
-        price: "25.00",
-        src: require("@/assets/img/products/product7.jpg"),
-      },
-      {
-        id: 4,
-        name: "PEPINILLO",
-        price: "30.00",
-        src: require("@/assets/img/products/product8.jpg"),
-      },
-      {
-        id: 5,
-        name: "FRESA",
-        price: "50.00",
-        src: require("@/assets/img/products/product9.jpg"),
-      },
-      {
-        id: 6,
-        name: "UVA ITALIANA",
-        price: "34.00",
-        src: require("@/assets/img/products/product10.jpg"),
-      },
-      {
-        id: 7,
-        name: "PALTA",
-        price: "38.00",
-        src: require("@/assets/img/products/product11.jpg"),
-      },
-      {
-        id: 8,
-        name: "PEPINO",
-        price: "25.00",
-        src: require("@/assets/img/products/product12.jpg"),
-      },
-      {
-        id: 9,
-        name: "CULANTRO",
-        price: "50.00",
-        src: require("@/assets/img/products/product13.jpg"),
-      },
-      {
-        id: 10,
-        name: "LECHUGA",
-        price: "34.00",
-        src: require("@/assets/img/products/product14.jpg"),
-      },
-      {
-        id: 11,
-        name: "COLIFLOR",
-        price: "38.00",
-        src: require("@/assets/img/products/product15.jpg"),
-      },
-      {
-        id: 12,
-        name: "POLLO",
-        price: "25.00",
-        src: require("@/assets/img/products/product16.jpg"),
-      },
-    ],
   }),
+  methods: {
+    fetchPage: async function (page) {
+      const category = this.categorias[this.currentCategory].id;
+      const { data } = await this.$axios.get(
+        `producto/tabla?pagina=${page ?? 1}&categoria=${category}`
+      );
+      this.paginator = data;
+    },
+    fetchPageByCategory: async function (index) {
+      const category = this.categorias[index].id;
+      const { data } = await this.$axios.get(
+        `producto/tabla?pagina=1&categoria=${category}`
+      );
+      this.paginator = data;
+    },
+  },
+  async mounted() {
+    const { data } = await this.$axios.get("categoria");
+    this.categorias = data;
+
+    const queryCategory = this.$route.query.categoria;
+    if (queryCategory) {
+      const queryIndex = this.categorias.findIndex(
+        (c) => c.id == queryCategory
+      );
+      this.currentCategory = queryIndex ?? 0;
+      console.log(this.$route.query.categoria);
+    }
+
+    /*const responseProductos = await this.$axios.get("producto");
+    this.productos = responseProductos.data;*/
+    this.fetchPage(1);
+  },
 };
 </script>

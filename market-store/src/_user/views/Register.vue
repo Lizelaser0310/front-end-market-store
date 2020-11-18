@@ -1,10 +1,7 @@
 <template>
   <v-sheet class="ml-10 mr-10">
-    <v-row class="ml-10">
-      <h1>Registro</h1>
-    </v-row>
     <v-row>
-      <v-col cols="12" md="4">
+      <!--<v-col cols="12" md="4">
         <gmap-map
           :center="center"
           :zoom="12"
@@ -17,8 +14,9 @@
             @click="center = m.position"
           ></gmap-marker>
         </gmap-map>
-      </v-col>
-      <v-col cols="12" md="8" style="position: relative">
+      </v-col>-->
+      <v-col cols="12" md="6" style="position: relative">
+        <h1>NUEVOS CLIENTES</h1>
         <v-form>
           <v-text-field
             v-model="name"
@@ -39,10 +37,16 @@
             outlined
           />
           <v-text-field
+            v-model="username"
+            :rules="usernameRules"
+            label="Correo"
+            outlined
+          />
+          <v-text-field
             v-model="newpassword"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show ? 'text' : 'password'"
-            label="Nueva Contraseña"
+            label="Contraseña"
             outlined
             @click:append="show = !show"
           />
@@ -56,7 +60,6 @@
           />
           <h2>Datos de contacto</h2>
           <v-text-field label="Teféfono" outlined />
-          <v-text-field label="Dirección" outlined />
 
           <v-btn color="primary" to="/">Guardar cambios</v-btn>
         </v-form>

@@ -1,232 +1,131 @@
 <template>
-  <div>
-    <v-container>
-      <div class="row">
-        <div class="col-md-5 col-sm-5 col-xs-12">
-          <v-carousel>
-            <v-carousel-item
-              :src="require('@/assets/img/products/product16.jpg')"
+  <v-container>
+    <v-row>
+      <v-col cols="12" sm="6">
+        <v-carousel>
+          <v-carousel-item :src="product.imagen"> </v-carousel-item>
+        </v-carousel>
+      </v-col>
+      <v-col cols="12" sm="6">
+        <!--<v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>-->
+        <div class="pl-6 mb-6">
+          <p class="display-1 mb-0">{{ product.nombre }}</p>
+          <v-card-actions class="pa-0">
+            <p
+              class="headline font-weight-light pt-3"
+              v-if="product.descuento > 0"
             >
-            </v-carousel-item>
-          </v-carousel>
-        </div>
-        <div class="col-md-7 col-sm-7 col-xs-12">
-          <!--<v-breadcrumbs class="pb-0" :items="breadcrums"></v-breadcrumbs>-->
-          <div class="pl-6">
-            <p class="display-1 mb-0">Pollo fresco</p>
-            <v-card-actions class="pa-0">
-              <p class="headline font-weight-light pt-3">
-                $65.00
-                <del style="" class="subtitle-1 font-weight-thin">$80.00</del>
-              </p>
-              <v-spacer></v-spacer>
-              <v-rating
-                v-model="rating"
-                class=""
-                background-color="warning lighten-3"
-                color="warning"
-                dense
-              ></v-rating>
-              <span class="body-2 font-weight-thin"> 25 COMENTARIOS</span>
-            </v-card-actions>
-            <p class="subtitle-1 font-weight-thin">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl
-              tincidunt eget nullam non. Tincidunt arcu non sodales neque
-              sodales ut etiam. Lectus arcu bibendum at varius vel pharetra.
-              Morbi tristique senectus et netus et malesuada.
+              S/. {{ product.precio }}
+              <del style="" class="subtitle-1 font-weight-thin">
+                S/. {{ product.descuento }}</del
+              >
             </p>
-            <p class="title">CANTIDAD</p>
-
-            <v-text-field
-              outlined
-              style="width: 100px"
-              :value="1"
+            <p class="headline font-weight-light pt-3" v-else>
+              S/. {{ product.precio }}
+            </p>
+            <v-spacer></v-spacer>
+            <v-rating
+              v-model="rating"
+              class=""
+              background-color="warning lighten-3"
+              color="warning"
               dense
-            ></v-text-field>
-            <v-btn class="primary white--text" outlined tile dense
-              ><v-icon>mdi-cart</v-icon> AGREGAR AL CARRITO</v-btn
-            >
-            <v-btn class="ml-4" outlined tile
-              >AÑADIR A LA LISTA DE DESEOS</v-btn
-            >
-          </div>
+            ></v-rating>
+            <span class="body-2 font-weight-thin"> 25 COMENTARIOS</span>
+          </v-card-actions>
+          <p class="subtitle-1 font-weight-thin">
+            {{ product.categoria }}
+            {{ product.descripcion }}
+          </p>
+          <p class="title">CANTIDAD</p>
+          <v-text-field
+            class="mb-8"
+            outlined
+            style="width: 120px"
+            :value="1"
+            :suffix="product.medida"
+            dense
+            type="number"
+            hide-details
+          >
+          </v-text-field>
+          <v-btn class="primary white--text" outlined tile dense
+            ><v-icon>mdi-cart</v-icon> AGREGAR AL CARRITO</v-btn
+          >
+          <v-btn class="ml-4" outlined tile>AÑADIR A LA LISTA DE DESEOS</v-btn>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-xs-12 col-md-12">
-          <v-tabs>
-            <v-tab>DESCRIPCIÓN</v-tab>
-            <v-tab-item>
-              <p class="pt-10 subtitle-1 font-weight-thin">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ultricies mi eget mauris pharetra et. Vel pretium lectus quam id
-                leo in vitae turpis massa. Orci dapibus ultrices in iaculis
-                nunc. At auctor urna nunc id cursus metus. Integer feugiat
-                scelerisque varius morbi enim nunc. Aliquam sem et tortor
-                consequat id porta nibh venenatis cras. Pellentesque pulvinar
-                pellentesque habitant morbi tristique senectus et netus.
-                Malesuada nunc vel risus commodo viverra maecenas. Neque
-                volutpat ac tincidunt vitae semper quis.
-              </p>
-            </v-tab-item>
-          </v-tabs>
-          <v-card-text class="pa-0 pt-4" tile outlined>
-            <p class="subtitle-1 font-weight-light pt-3 text-center">
-              OTROS PRODUCTOS RELACIONADOS
+
+        <v-tabs>
+          <v-tab>DESCRIPCIÓN</v-tab>
+          <v-tab-item>
+            <p class="pt-4 subtitle-1 font-weight-thin">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <v-divider></v-divider>
-            <div class="row text-center">
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product5.jpg')"
-                    >
-                      <v-card-title>Bags & Purses </v-card-title>
-                    </v-img>
+          </v-tab-item>
+          <v-tab>MAS INFORMACIÓN</v-tab>
+          <v-tab-item>
+            <p class="pt-4 subtitle-1 font-weight-thin">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </v-tab-item>
+        </v-tabs>
+      </v-col>
+    </v-row>
 
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Baggit, Zara, Fossil</div>
-                    </v-card-text>
+    <p class="subtitle-1 font-weight-light my-6 text-center">
+      OTROS PRODUCTOS RELACIONADOS
+    </p>
 
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
+    <v-slide-group class="my-4" show-arrows>
+      <v-slide-item v-for="pro in related" :key="pro.id">
+        <v-hover v-slot:default="{ hover }">
+          <v-card
+            outlined
+            class="mx-2 my-4"
+            elevation="2"
+            min-width="200"
+            max-width="600"
+          >
+            <v-img
+              class="white--text align-end"
+              :aspect-ratio="16 / 9"
+              height="200px"
+              :src="pro.imagen"
+            >
+              <!--<v-card-title>{{pro.type}} </v-card-title>-->
+              <v-expand-transition>
+                <div
+                  v-if="hover"
+                  class="d-flex transition-fast-in-fast-out white darken-2 v-card--reveal display-3 white--text"
+                  style="height: 100%"
+                >
+                  <v-btn
+                    v-if="hover"
+                    :href="'/producto/' + pro.id"
+                    class
+                    outlined
+                    >VIEW</v-btn
+                  >
+                </div>
+              </v-expand-transition>
+            </v-img>
+            <v-card-text class="text--primary">
+              <div>
+                <a
+                  :href="'/producto/' + pro.id"
+                  style="text-decoration: none"
+                  >{{ pro.nombre }}</a
+                >
               </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product6.jpg')"
-                    >
-                      <v-card-title>T-Shirt </v-card-title>
-                    </v-img>
+              <div>${{ pro.precio }}</div>
+            </v-card-text>
+          </v-card>
+        </v-hover>
+      </v-slide-item>
+    </v-slide-group>
 
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 50%</div>
-                      <div>Zara, Selected, Celio</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
-              </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product7.jpg')"
-                    >
-                      <v-card-title>Jeans </v-card-title>
-                    </v-img>
-
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Jack & Jones, Levis</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
-              </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product8.jpg')"
-                    >
-                      <v-card-title>Shirts </v-card-title>
-                    </v-img>
-
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Nike, Adidas, Puma</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
-              </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product9.jpg')"
-                    >
-                      <v-card-title>Shoes </v-card-title>
-                    </v-img>
-
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Nike, Adidas, Puma</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
-              </div>
-              <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="require('@/assets/img/products/product10.jpg')"
-                    >
-                      <v-card-title>Jackets </v-card-title>
-                    </v-img>
-
-                    <v-card-text class="text--primary text-center">
-                      <div>Upto 60% + Extra 10%</div>
-                      <div>Nike, Adidas, Puma</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn class="ma-2" outlined color="info">
-                        Explore
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
-              </div>
-            </div>
-          </v-card-text>
-        </div>
-      </div>
-    </v-container>
     <v-card>
       <v-row no-gutters>
         <v-col class="col-12 col-md-4 col-sm-12">
@@ -266,63 +165,42 @@
         </v-col>
       </v-row>
     </v-card>
-  </div>
+  </v-container>
 </template>
 <script>
 export default {
   data: () => ({
     rating: 4.5,
-    breadcrums: [
-      {
-        text: "Home",
-        disabled: false,
-        href: "breadcrumbs_home",
-      },
-      {
-        text: "Clothing",
-        disabled: false,
-        href: "breadcrumbs_clothing",
-      },
-      {
-        text: "T-Shirts",
-        disabled: true,
-        href: "breadcrumbs_shirts",
-      },
-    ],
     item: 5,
-    items: [
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-        title: "Lorem ipsum dolor?",
-        subtitle:
-          "<span class='text--primary'>Ali Connors</span> &mdash; Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Tincidunt arcu non sodales neque sodales ut etiam. Lectus arcu bibendum at varius vel pharetra. Morbi tristique senectus et netus et malesuada.\n" +
-          "\n",
-      },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-        title:
-          'Lorem ipsum dolor <span class="grey--text text--lighten-1">4</span>',
-        subtitle:
-          "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
-      },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        title: "Lorem ipsum dolor",
-        subtitle:
-          "<span class='text--primary'>Sandra Adams</span> &mdash; Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-        title: "Lorem ipsum dolor",
-        subtitle: "",
-      },
-      {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
-        title: "Lorem ipsum dolor",
-        subtitle:
-          "<span class='text--primary'>Britta Holt</span> &mdash; Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      },
-    ],
+    related: [],
+    product: {
+      id: 0,
+      category: 0,
+      name: "",
+      price: 0,
+      stock: 0,
+      meausure: "",
+      image: "",
+      description: "",
+    },
   }),
+  methods: {
+    getProduct: async function () {
+      const { data } = await this.$axios.get(
+        `producto/${this.$route.params.id}`
+      );
+      this.product = data;
+      this.relatedProducts();
+    },
+    relatedProducts: async function () {
+      const { data } = await this.$axios.get(
+        `producto/tabla?categoria=${this.product.categoriaId}`
+      );
+      this.related = data.listado.filter((item) => item.id !== this.product.id);
+    },
+  },
+  mounted() {
+    this.getProduct();
+  },
 };
 </script>

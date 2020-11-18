@@ -24,10 +24,11 @@
           <v-list-item
             v-for="(item, index) in categorias"
             :key="index"
+            :href="`/tienda?categoria=${item.id}`"
             link
             tile
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ item.denominacion }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -77,18 +78,7 @@ export default {
   name: "LayoutNavigation",
   data() {
     return {
-      categorias: [
-        { title: "ALIMENTOS" },
-        { title: "ENLATADOS" },
-        { title: "LACTEOS" },
-        { title: "CARNES" },
-        { title: "BEBIDAS Y ENVASADOS" },
-        { title: "CHARCUTERÍA" },
-        { title: "FRUTAS" },
-        { title: "HORTALIZAS" },
-        { title: "ASEO PERSONAL" },
-        { title: "LIMPIEZA" },
-      ],
+      categorias: [],
       items: [
         { title: "Preguntas Frecuentes" },
         { title: "Libro de reclamaciones" },
@@ -97,8 +87,18 @@ export default {
       activeBtn: 1,
     };
   },
-  mounted: function () {
-    console.log(this.$route);
+  methods: {
+    fetchPageByCategory: async function (index) {
+      const category = this.categorias[index].id;
+      const { data } = await this.$axios.get(
+        `producto/tabla?pagina=1&categoria=${category}`
+      );
+      this.paginator = data;
+    },
+  },
+  async mounted() {
+    const { data } = await this.$axios.get("categoria");
+    this.categorias = data;
   },
 };
 </script>

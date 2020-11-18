@@ -16,7 +16,6 @@
                       <v-img
                         class="white--text align-end"
                         height="200px"
-                        :src="require('@/assets/img/ofertas/oferta8.jpg')"
                       ></v-img>
 
                       <div class="text-center">
@@ -36,17 +35,13 @@
                 <v-hover v-slot:default="{ hover }" open-delay="200">
                   <v-card :elevation="hover ? 16 : 2">
                     <v-card-text class="text--primary text-center">
-                      <v-img
-                        class="white--text align-end"
-                        height="200px"
-                        :src="require('@/assets/img/ofertas/oferta6.jpg')"
-                      >
+                      <v-img class="white--text align-end" height="200px">
                         <!--<v-card-title>Shoes </v-card-title>-->
                       </v-img>
 
                       <div class="text-center">
                         <v-radio-group v-model="radioGroup">
-                          <v-radio label="Solo Verduras" value="2"></v-radio>
+                          <v-radio label="Solo Frutas" value="2"></v-radio>
                         </v-radio-group>
                       </div>
                       <div>
@@ -61,17 +56,13 @@
                 <v-hover v-slot:default="{ hover }" open-delay="200">
                   <v-card :elevation="hover ? 16 : 2">
                     <v-card-text class="text--primary text-center">
-                      <v-img
-                        class="white--text align-end"
-                        height="200px"
-                        :src="require('@/assets/img/ofertas/oferta8.jpg')"
-                      >
+                      <v-img class="white--text align-end" height="200px">
                         <!--<v-card-title>Shoes </v-card-title>-->
                       </v-img>
 
                       <div class="text-center">
                         <v-radio-group v-model="radioGroup">
-                          <v-radio label="Solo Frutas" value="3"></v-radio>
+                          <v-radio label="Mixto" value="3"></v-radio>
                         </v-radio-group>
                       </div>
                       <div>

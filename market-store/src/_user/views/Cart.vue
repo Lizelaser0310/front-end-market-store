@@ -86,12 +86,8 @@
             </template>
           </v-simple-table>
         </v-col>
-        <v-col :cols="12" md="3" sm="12" style="background-color: lightgray">
+        <v-col :cols="12" md="3" sm="12" style="border: 2px solid #429f14">
           <p class="headline">Resumen de compra</p>
-          <p class="overline">
-            Los gastos de envío y adicionales se calculan en base a los valores
-            que ha ingresado
-          </p>
           <v-simple-table>
             <template v-slot:default>
               <tbody>
@@ -100,7 +96,7 @@
                   <td class="text-right" style="width: 50px">$160.00</td>
                 </tr>
                 <tr>
-                  <td>Gatos de envío</td>
+                  <td>Gastos de envío</td>
                   <td class="text-right" style="width: 50px">$10.00</td>
                 </tr>
                 <tr>
@@ -118,7 +114,7 @@
           </v-simple-table>
           <div class="text-center">
             <v-btn class="primary white--text mt-5" outlined
-              >PROCEDER A PAGAR</v-btn
+              >COMPRAR CARRITO</v-btn
             >
           </div>
         </v-col>

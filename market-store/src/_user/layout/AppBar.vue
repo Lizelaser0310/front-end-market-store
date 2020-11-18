@@ -3,7 +3,7 @@
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
-      color="#80b82d"
+      color="#86C840"
       dark
     >
       <!--<v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown"/>-->
@@ -137,5 +137,19 @@ export default {
       { id: 3, name: "PÁGINAS" },
     ],
   }),
+  methods: {
+    async login() {
+      const response = await this.$axios.post(
+        "http://localhost:51301/api/autenticacion/login",
+        {
+          usuario: this.user,
+          clave: this.password,
+        }
+      );
+      if (response.status === 200) {
+        //store.commit("login", response.data)
+      }
+    },
+  },
 };
 </script>
