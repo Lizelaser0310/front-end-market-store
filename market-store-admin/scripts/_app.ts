@@ -2,13 +2,7 @@ import { Vue, Component, Watch } from "nuxt-property-decorator";
 import { commonStore } from "~/store";
 import { AlertMutation, AlertType, Align, SnackbarMutation } from "~/types";
 
-@Component({
-  middleware: "auth",
-  // Head configuration.
-  head() {
-    return { title: "App" };
-  },
-})
+@Component
 export default class AppLayout extends Vue {
   miniVariant: boolean = true;
   expandHover: boolean = true;
@@ -76,6 +70,9 @@ export default class AppLayout extends Vue {
 
   logout() {
     this.$auth.logout();
+    if (this.$route.name === "index") {
+      location.reload();
+    }
   }
 
   // Global snackbar handler.

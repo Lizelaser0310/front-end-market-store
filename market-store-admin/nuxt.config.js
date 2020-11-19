@@ -10,7 +10,7 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: "%s - Market Store Admin",
-    title: "market-store-admin",
+    title: "Market Store",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -53,12 +53,20 @@ export default {
   publicRuntimeConfig: {
     axios: {
       // browserBaseURL: "http://209.50.56.17:8080",
-      browserBaseURL: "http://192.168.0.28:51301",
+      browserBaseURL: "http://localhost:51302",
+      headers: { "Content-Type": "application/json" },
     },
   },
 
   auth: {
     strategies: {
+      redirect: {
+        login: "/login",
+        logout: "/login",
+        callback: false,
+        home: "/",
+      },
+      cookie: false,
       local: {
         endpoints: {
           login: {
@@ -66,10 +74,13 @@ export default {
             method: "post",
             propertyName: false,
           },
-          user: false,
+          user: {
+            url: "/api/autenticacion/usuario",
+            method: "get",
+            propertyName: false,
+          },
           logout: false,
         },
-        autoFetchUser: false,
       },
     },
   },

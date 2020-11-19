@@ -1,0 +1,21 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Launch admin",
+            "type": "chrome",
+            "runtimeExecutable": "/usr/bin/chromium",
+            "request": "launch",
+            "url": "http://localhost:3000/",
+            "webRoot": "${workspaceFolder}/market-store-admin/"
+        },
+        {
+            "name": "Launch client",
+            "type": "chrome",
+            "runtimeExecutable": "/usr/bin/chromium",
+            "request": "launch",
+            "url": "http://localhost:8080/",
+            "webRoot": "${workspaceFolder}/market-store/"
+        },
+    ]
+}

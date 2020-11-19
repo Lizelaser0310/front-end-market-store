@@ -2,8 +2,7 @@ import { Vue, Component, Prop } from "nuxt-property-decorator";
 import { ErrorPayload } from "~/types/common";
 
 @Component({
-  // Layout configuration.
-  layout: "empty",
+  auth: false,
 
   // Head configuration.
   head(this: ErrorPage) {

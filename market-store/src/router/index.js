@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import UserLayout from '@/_user/layout/Layout.vue';
 import UserHome from '@/_user/views/Home.vue';
 
+import store from '../store/index.js'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +42,9 @@ const routes = [
         path: '/carrito',
         name: 'Cart',
         component: () => import('../_user/views/Cart.vue'),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: '/deseados',
@@ -84,5 +89,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    store.commit("loginHelper", { require: true, next: to.fullPath });
+  } else {
+    next();
+  }
+});
 
 export default router
