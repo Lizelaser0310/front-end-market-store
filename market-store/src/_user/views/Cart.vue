@@ -13,30 +13,71 @@
                   <th class="text-center">PRODUCTO</th>
                   <th class="text-center">PRECIO</th>
                   <th class="text-center">CANTIDAD</th>
-                  <th class="text-center">TOTAL</th>
+                  <th class="text-center">SUBTOTAL</th>
                   <th class="text-center"></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
+              <tbody class="">
+                <tr v-for="(item, idx) in products" :key="item.id">
+                  <td class="text-center">
+                    <v-list-item key="1">
+                      <v-list-item-content>
+                        <v-list-item-title>{{ item.nombre }}</v-list-item-title>
+                        <v-list-item-subtitle>{{
+                          item.descripcion
+                        }}</v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </td>
+                  <td class="text-center">
+                    {{ item.precio }}
+                  </td>
+                  <td class="text-center">
+                    <v-text-field
+                      class="pt-10"
+                      label="Outlined"
+                      style="width: 80px"
+                      single-line
+                      outlined
+                      :value="item.cantidad"
+                      type="number"
+                    >
+                    </v-text-field>
+                  </td>
+                  <td class="text-center">
+                    {{ item.subtotal }}
+                  </td>
+                  <td
+                    class="text-center deleteProduct"
+                    @click="funcDeleteTable(idx)"
+                  >
+                    X
+                  </td>
+                </tr>
+                <!--<tr>
                   <td>
                     <v-list-item key="1">
                       <v-list-item-avatar>
                         <v-img
+                          class="imageProduct"
                           :src="require('@/assets/img/products/product5.jpg')"
                         ></v-img>
                       </v-list-item-avatar>
 
                       <v-list-item-content>
-                        <v-list-item-title>Papa blanca</v-list-item-title>
-                        <v-list-item-subtitle>Lorem Ipsum</v-list-item-subtitle>
+                        <v-list-item-title class="nameProduct"
+                          >Papa blanca</v-list-item-title
+                        >
+                        <v-list-item-subtitle class="descriptionProduct"
+                          >Lorem Ipsum</v-list-item-subtitle
+                        >
                       </v-list-item-content>
                     </v-list-item>
                   </td>
-                  <td>$40.00</td>
+                  <td class="priceProduct">$40.00</td>
                   <td>
                     <v-text-field
-                      class="pt-10"
+                      class="quantityProduct pt-10"
                       label="Outlined"
                       style="width: 80px"
                       single-line
@@ -46,11 +87,11 @@
                     ></v-text-field>
                   </td>
                   <td>$80.00</td>
-                  <td>
+                  <td class="deleteProduct">
                     <a>X</a>
                   </td>
-                </tr>
-                <tr>
+                </tr>-->
+                <!--<tr>
                   <td>
                     <v-list-item key="1">
                       <v-list-item-avatar>
@@ -81,7 +122,7 @@
                   <td>
                     <a>X</a>
                   </td>
-                </tr>
+                </tr>-->
               </tbody>
             </template>
           </v-simple-table>
@@ -184,7 +225,50 @@ export default {
         href: "breadcrumbs_shirts",
       },
     ],
+    product: {
+      id: 3,
+      imagen: "P",
+      nombre: "Papaya",
+      descripcion: "Lorem Ipsum",
+      precio: 4,
+      cantidad: 1,
+      subtotal: 4,
+    },
+    products: [
+      {
+        id: 1,
+        imagen: "",
+        nombre: "Papa",
+        descripcion: "Lorem ipsun",
+        precio: 8,
+        cantidad: 1,
+        subtotal: 8,
+      },
+      {
+        id: 2,
+        imagen: "",
+        nombre: "Fresa",
+        descripcion: "Lorem ipsun",
+        precio: 10,
+        cantidad: 1,
+        subtotal: 10,
+      },
+    ],
   }),
+  methods: {
+    funcAddTable: function () {
+      this.products.push(this.product);
+    },
+    funcDeleteTable: function (index) {
+      if (confirm("Are you sure you want to delete this item?")) {
+        this.products.splice(index, 1);
+        console.log(index);
+      }
+    },
+  },
+  mounted() {
+    this.funcAddTable();
+  },
 };
 </script>
 

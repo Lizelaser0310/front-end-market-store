@@ -82,7 +82,7 @@
         </v-badge>
       </v-btn>
       <v-btn to="/carrito" icon style="margin-right: 10px">
-        <v-badge content="2" value="2" color="green" overlap>
+        <v-badge content="5" value="2" color="green" overlap>
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>

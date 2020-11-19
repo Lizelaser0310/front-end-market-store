@@ -53,7 +53,7 @@ export default {
   publicRuntimeConfig: {
     axios: {
       // browserBaseURL: "http://209.50.56.17:8080",
-      browserBaseURL: "http://192.168.0.28:51301",
+      browserBaseURL: "http://localhost:51302",
     },
   },
 
