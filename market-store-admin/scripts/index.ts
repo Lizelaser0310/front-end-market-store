@@ -5,11 +5,7 @@ import { Vue, Component } from "nuxt-property-decorator";
 
   // Head configuration.
   head() {
-    return { title: "AWA" };
+    return { title: "Dashboard" };
   },
 })
-export default class LoginPage extends Vue {
-  showPassword: boolean = false;
-
-  login() {}
-}
+export default class IndexPage extends Vue {}

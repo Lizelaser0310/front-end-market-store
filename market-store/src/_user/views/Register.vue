@@ -1,71 +1,64 @@
 <template>
-  <v-sheet class="ml-10 mr-10">
-    <v-row>
-      <!--<v-col cols="12" md="4">
-        <gmap-map
-          :center="center"
-          :zoom="12"
-          style="width: 100%; height: 600px"
-        >
-          <gmap-marker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            @click="center = m.position"
-          ></gmap-marker>
-        </gmap-map>
-      </v-col>-->
-      <v-col cols="12" md="6" style="position: relative">
-        <h1>NUEVOS CLIENTES</h1>
-        <v-form>
-          <v-text-field
-            v-model="name"
-            :rules="nameRules"
-            label="Nombres"
-            outlined
-          />
-          <v-text-field
-            v-model="lastname"
-            :rules="lastnameRules"
-            label="Apellidos"
-            outlined
-          />
-          <v-text-field
-            v-model="username"
-            :rules="usernameRules"
-            label="Nombre de usuario"
-            outlined
-          />
-          <v-text-field
-            v-model="username"
-            :rules="usernameRules"
-            label="Correo"
-            outlined
-          />
-          <v-text-field
-            v-model="newpassword"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show ? 'text' : 'password'"
-            label="Contraseña"
-            outlined
-            @click:append="show = !show"
-          />
-          <v-text-field
-            v-model="confirmpassword"
-            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show2 ? 'text' : 'password'"
-            label="Confirmar Contraseña"
-            outlined
-            @click:append="show2 = !show2"
-          />
-          <h2>Datos de contacto</h2>
-          <v-text-field label="Teféfono" outlined />
+  <v-row justify="center">
+    <v-col cols="12" md="10">
+      <h2 class="mb-4">NUEVO CLIENTE</h2>
+      <v-form ref="registerForm">
+        <v-text-field
+          v-model="name"
+          :rules="nameRule"
+          label="Nombres"
+          outlined
+        />
+        <v-text-field
+          v-model="lastname"
+          :rules="lastNameRule"
+          label="Apellidos"
+          outlined
+        />
+        <v-text-field
+          v-model="username"
+          :rules="requiredRule"
+          label="Nombre de usuario"
+          outlined
+        />
+        <v-text-field
+          v-model="email"
+          :rules="emailRule"
+          label="Correo"
+          outlined
+        />
+        <v-text-field
+          v-model="password"
+          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show ? 'text' : 'password'"
+          :rules="requiredRule"
+          label="Contraseña"
+          outlined
+          @click:append="show = !show"
+        />
+        <v-text-field
+          v-model="confirmPassword"
+          :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="show2 ? 'text' : 'password'"
+          :rules="requiredRule"
+          label="Confirmar Contraseña"
+          outlined
+          @click:append="show2 = !show2"
+        />
+        <h3 class="mb-4">Datos de contacto</h3>
+        <v-text-field
+          v-model="phone"
+          :rules="requiredRule"
+          label="Teféfono"
+          outlined
+        />
 
-          <v-btn color="primary" to="/">Guardar cambios</v-btn>
-        </v-form>
-      </v-col>
-    </v-row>
-  </v-sheet>
+        <div class="text-center fill-width mb-12">
+          <v-btn color="primary" @click="register">Registrar</v-btn>
+        </div>
+      </v-form>
+    </v-col>
+  </v-row>
 </template>
 <script>
 export default {
@@ -85,28 +78,31 @@ export default {
       valid: true,
       show: false,
       show2: false,
-      username: "admin",
-      nameRules: [
+      username: "",
+      name: "",
+      //nameRules: [(v) => !!v || "El campo nombre es requerido"],
+      lastname: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      right: null,
+      checkbox: false,
+
+      nameRule: [
         (v) => !!v || "El nombre de usuario es requerido",
         (v) =>
           (v && v.length <= 10) ||
           "El nombre de usuario debe contener menos de 10 caracteres",
       ],
-      name: "Lizeth Milagros",
-      //nameRules: [(v) => !!v || "El campo nombre es requerido"],
-      lastname: "La Serna Felices",
-      lastnameRules: [
+      lastNameRule: [
         (v) => !!v || "El campo apellidos de usuario es requerido",
       ],
-      email: "admin@gmail.com",
-      emailRules: [
+      emailRule: [
         (v) => !!v || "El correo es requerido",
         (v) => /.+@.+\..+/.test(v) || "El correo debe ser válido",
       ],
-      newpassword: "",
-      confirmpassword: "",
-      right: null,
-      checkbox: false,
+      requiredRule: [(value) => !!value || "Este campo es requerido"],
     };
   },
   mounted() {
@@ -136,6 +132,32 @@ export default {
         this.places.push(this.currentPlace);
         this.center = marker;
         this.currentPlace = null;
+      }
+    },
+    async register() {
+      if (this.$refs.registerForm.validate()) {
+        if (this.password === this.confirmPassword) {
+          try {
+            const { status } = await this.$axios.post(
+              "/autenticacion/registrar",
+              {
+                usuarioNombre: this.username,
+                contrasena: this.password,
+                correo: this.email,
+                nombres: this.name,
+                apellidos: this.lastname,
+                telefono: this.phone,
+              }
+            );
+            if (status === 201) {
+              this.$router.push("/");
+            }
+          } catch (e) {
+            console.log("Failed");
+          } finally {
+            this.loginLoading = false;
+          }
+        }
       }
     },
     geolocate: function () {

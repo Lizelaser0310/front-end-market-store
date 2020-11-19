@@ -32,8 +32,12 @@
       />
       <v-spacer />
 
+      <v-btn v-if="isLoggedIn" @click="logout" color="white" text
+        >Log out</v-btn
+      >
+
       <!--login Dialog-->
-      <v-dialog v-model="dialog" max-width="800px">
+      <v-dialog v-else v-model="loginDialog" max-width="800px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="white" dark v-on="on" v-bind="attrs" text>Log in</v-btn>
         </template>
@@ -46,29 +50,31 @@
               <v-btn
                 icon
                 style="position: absolute; right: 6px"
-                @click="dialog = !dialog"
+                @click="loginDialog = !loginDialog"
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
               <h1 class="mt-12 mb-8 text-center">Iniciar sesión</h1>
-              <v-form class="text-center">
+              <v-form ref="loginForm" class="text-center">
                 <v-text-field
                   v-model="user"
                   append-icon="mdi-account"
                   name="usuario"
                   label="Usuario"
+                  :rules="[requiredRule]"
                   outlined
                 />
                 <v-text-field
                   v-model="password"
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show ? 'text' : 'password'"
+                  :rules="[requiredRule]"
                   label="Contraseña"
                   outlined
                   @click:append="show = !show"
                 />
 
-                <v-btn color="primary" to="/cuenta" @click="dialog = !dialog"
+                <v-btn color="primary" :loading="loginLoading" @click="login"
                   >Ingresar</v-btn
                 >
               </v-form>
@@ -106,9 +112,8 @@
 
           <v-spacer></v-spacer>
 
-          <v-btn icon @click="show = !show">
-            <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
-          </v-btn>
+          <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
+          <v-btn icon @click="show = !show"> </v-btn>
         </v-card-actions>
 
         <v-expand-transition>
@@ -123,32 +128,64 @@
   </div>
 </template>
 <script>
+import { mapState, mapGetters } from "vuex";
+
 export default {
   name: "LayoutAppBar",
   data: () => ({
     drawer: false,
     show: false,
-    dialog: false,
-    user: "admin@gmail.com",
-    password: "123456",
+    loginDialog: false,
+    loginLoading: false,
+    user: "",
+    password: "",
     categorias: [
       { id: 1, name: "INICIO" },
       { id: 2, name: "TIENDA" },
       { id: 3, name: "PÁGINAS" },
     ],
+    requiredRule: (value) => !!value || "Este campo es requerido",
   }),
+  computed: { ...mapGetters(["isLoggedIn"]), ...mapState(["loginHelper"]) },
+  watch: {
+    loginHelper: function (helper) {
+      this.loginDialog = helper.require;
+    },
+    loginDialog: function (model) {
+      this.$store.commit("loginHelper", {
+        require: model,
+        next: this.loginHelper.next,
+      });
+    },
+  },
   methods: {
     async login() {
-      const response = await this.$axios.post(
-        "http://localhost:51301/api/autenticacion/login",
-        {
-          usuario: this.user,
-          clave: this.password,
+      if (this.$refs.loginForm.validate()) {
+        this.loginLoading = true;
+        try {
+          const { status, data } = await this.$axios.post(
+            "/autenticacion/login",
+            {
+              usuario: this.user,
+              clave: this.password,
+            }
+          );
+          if (status === 200) {
+            this.$store.commit("login", data);
+            this.$router.push(this.loginHelper.next);
+          }
+        } catch (e) {
+          console.log("Failed");
+        } finally {
+          this.loginLoading = false;
         }
-      );
-      if (response.status === 200) {
-        //store.commit("login", response.data)
       }
+    },
+    logout() {
+      if (this.$route.matched.some((record) => record.meta.requiresAuth)) {
+        this.$router.push("/");
+      }
+      this.$store.commit("logout");
     },
   },
 };

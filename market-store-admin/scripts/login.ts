@@ -6,6 +6,7 @@ interface LoginRequest {
 }
 
 @Component({
+  auth: "guest",
   // Head configuration.
   head() {
     return { title: "Iniciar sesión" };
