@@ -83,6 +83,11 @@ const routes = [
           requiresAuth: true
         }
       }
+      {
+        path: '/contacto',
+        name: 'Contact',
+        component: () => import('../_user/views/Contact.vue'),
+      },
     ]
   },
   {

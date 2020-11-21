@@ -110,18 +110,19 @@
             label="Buscar producto"
           />
         </v-card-title>
-
-        <v-card-actions>
-          <v-btn color="purple" text>
-            <span>INICIO</span>
-          </v-btn>
-
-          <v-spacer></v-spacer>
-
-          <v-icon>{{ show ? "mdi-chevron-up" : "mdi-chevron-down" }}</v-icon>
-          <v-btn icon @click="show = !show"> </v-btn>
-        </v-card-actions>
-
+        <v-card-text>
+        <v-list tile min-width="250">
+          <v-list-item
+            v-for="(item, index) in categorias"
+            :key="index"
+            :href="`/tienda?categoria=${item.id}`"
+            link
+            tile
+          >
+            <v-list-item-title>{{ item.denominacion }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        </v-card-text>
         <v-expand-transition>
           <div v-show="show">
             <v-divider></v-divider>
@@ -145,11 +146,7 @@ export default {
     loginLoading: false,
     user: "",
     password: "",
-    categorias: [
-      { id: 1, name: "INICIO" },
-      { id: 2, name: "TIENDA" },
-      { id: 3, name: "PÁGINAS" },
-    ],
+    categorias: [],
     requiredRule: (value) => !!value || "Este campo es requerido",
   }),
   computed: {
@@ -204,6 +201,19 @@ export default {
       this.$store.commit("logout");
       this.$store.commit("showSnackbar", "Ha cerrado sesión con éxito");
     },
+    fetchPageByCategory: async function (index) {
+      const category = this.categorias[index].id;
+      const { data } = await this.$axios.get(
+        `producto/tabla?pagina=1&categoria=${category}`
+      );
+      this.paginator = data;
+    },
+  },
+ 
+ async mounted() {
+    const { data } = await this.$axios.get("/categoria");
+    this.categorias = data;
+    console.log(this.categorias);
   },
 };
 </script>

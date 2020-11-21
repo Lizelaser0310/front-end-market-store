@@ -14,6 +14,16 @@ export default class AppLayout extends Vue {
       to: "/",
     },
     {
+      icon: "mdi-account-arrow-left-outline",
+      title: "Usuarios",
+      to: "/usuario",
+    },
+    {
+      icon: "mdi-note-text",
+      title: "Rol",
+      to: "/rol",
+    },
+    {
       icon: "mdi-store",
       title: "Productos",
       to: "/producto",
@@ -29,7 +39,7 @@ export default class AppLayout extends Vue {
       to: "/banner",
     },
     {
-      icon: "mdi-adjust",
+      icon: "mdi-shopping",
       title: "Canastas",
       to: "/canasta",
     },

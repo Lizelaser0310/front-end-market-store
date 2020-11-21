@@ -15,7 +15,7 @@
     <v-card>
       <v-container>
         <v-row no-gutters>
-          <v-col class="col-12 col-md-4 col-sm-12">
+          <v-col class="col-12 col-md-4 col-sm-12 col-xs-12">
             <v-row>
               <v-col class="col-12 col-sm-3 pr-4" align="right">
                 <v-icon class="display-2">mdi-truck</v-icon>
@@ -26,7 +26,7 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col class="col-12 col-md-4 col-sm-12">
+          <v-col class="col-12 col-md-4 col-sm-12 col-xs-12">
             <v-row>
               <v-col class="col-12 col-sm-3 pr-4" align="right">
                 <v-icon class="display-2">mdi-cash-usd</v-icon>
@@ -37,10 +37,10 @@
               </v-col>
             </v-row>
           </v-col>
-          <v-col class="col-12 col-md-4 col-sm-12">
+          <v-col class="col-12 col-md-4 col-sm-12 col-xs-12">
             <v-row>
               <v-col class="col-12 col-sm-3 pr-4" align="right">
-                <v-icon class="display-2">mdi-busket</v-icon>
+                <v-icon class="display-2">mdi-emoticon-happy</v-icon>
               </v-col>
               <v-col class="col-12 col-sm-9 pr-4">
                 <h3 class="font-weight-light">
