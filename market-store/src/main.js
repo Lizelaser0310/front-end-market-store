@@ -10,7 +10,7 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = Axios.create({
-  baseURL: 'http://localhost:51302/api/'
+  baseURL: 'http://192.168.0.5:51302/api/'
 })
 
 /*Vue.use(VueGoogleMaps, {

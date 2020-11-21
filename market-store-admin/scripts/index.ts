@@ -8,4 +8,4 @@ import { Vue, Component } from "nuxt-property-decorator";
     return { title: "Dashboard" };
   },
 })
-export default class IndexPage extends Vue {}
+export default class IndexPage extends Vue { }

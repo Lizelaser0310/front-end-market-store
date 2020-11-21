@@ -72,6 +72,11 @@ const routes = [
         name: 'FAQ',
         component: () => import('../_user/views/FAQ.vue'),
       },
+      {
+        path: '/contacto',
+        name: 'Contact',
+        component: () => import('../_user/views/Contact.vue'),
+      },
     ]
   },
   {

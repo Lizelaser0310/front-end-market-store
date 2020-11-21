@@ -67,7 +67,7 @@
     </v-slide-item>
 
     <v-slide-item>
-      <v-btn :input-value="false" height="57" active-class="primary--text" text
+      <v-btn :input-value="$route.fullPath === '/contacto'" height="57" to="/contacto" active-class="primary--text" text
         >CONTACTO</v-btn
       >
     </v-slide-item>
