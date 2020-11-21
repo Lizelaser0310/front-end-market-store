@@ -38,28 +38,31 @@
                     </v-list-item>
                   </td>
                   <td class="text-center">
-                    {{ item.product.precio }}
+                    {{ `S/ ${item.product.precio.toFixed(2)}` }}
                   </td>
                   <td class="text-center">
                     <v-text-field
-                      class="pt-10"
+                      v-model="item.quantity"
+                      type="number"
+                      class="py-4 mx-auto"
                       label="Outlined"
-                      style="width: 80px"
+                      style="width: 100px"
                       single-line
                       outlined
-                      :value="item.quantity"
-                      type="number"
+                      hide-details
+                      :suffix="item.product.medida"
                     >
                     </v-text-field>
                   </td>
                   <td class="text-center">
-                    {{ item.product.precio * item.quantity }}
+                    {{
+                      `S/ ${(item.product.precio * item.quantity).toFixed(2)}`
+                    }}
                   </td>
-                  <td
-                    class="text-center deleteProduct"
-                    @click="funcDeleteTable(idx)"
-                  >
-                    X
+                  <td class="text-center deleteProduct">
+                    <v-btn icon @click="$store.commit('removeToCart', idx)"
+                      ><v-icon>mdi-delete</v-icon>
+                    </v-btn>
                   </td>
                 </tr>
                 <!--<tr>
@@ -135,27 +138,33 @@
             </template>
           </v-simple-table>
         </v-col>
-        <v-col :cols="12" md="3" sm="12" style="border: 2px solid #429f14">
+        <v-col cols="12" md="3" style="border: 2px solid #429f14">
           <p class="headline">Resumen de compra</p>
           <v-simple-table>
             <template v-slot:default>
               <tbody>
                 <tr>
                   <td>Subtotal de compra</td>
-                  <td class="text-right" style="width: 50px">$160.00</td>
+                  <td class="text-right" style="width: 125px">
+                    S/ {{ subtotal.toFixed(2) }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Gastos de envío</td>
-                  <td class="text-right" style="width: 50px">$10.00</td>
+                  <td class="text-right" style="width: 125px">
+                    S/ {{ deliveryPrice.toFixed(2) }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Impuesto</td>
-                  <td class="text-right" style="width: 50px">$5.00</td>
+                  <td class="text-right" style="width: 125px">
+                    S/ {{ (total - subtotal).toFixed(2) }}
+                  </td>
                 </tr>
                 <tr>
                   <td>Total</td>
-                  <td class="text-right" style="width: 50px">
-                    <b>$175.00</b>
+                  <td class="text-right" style="width: 125px">
+                    <b>S/ {{ (total + deliveryPrice).toFixed(2) }}</b>
                   </td>
                 </tr>
               </tbody>
@@ -163,7 +172,7 @@
           </v-simple-table>
           <div class="text-center">
             <v-btn class="primary white--text mt-5" outlined
-              >COMPRAR CARRITO</v-btn
+              >COMPRAR AHORA</v-btn
             >
           </div>
         </v-col>
@@ -217,6 +226,7 @@ import { mapState } from "vuex";
 export default {
   data: () => ({
     rating: 4.5,
+    deliveryPrice: 5,
     breadcrums: [
       {
         text: "Home",
@@ -235,14 +245,21 @@ export default {
       },
     ],
   }),
-  methods: {
-    funcDeleteTable: function (index) {
-      if (confirm("Are you sure you want to delete this item?")) {
-        this.$store.commit("removeToCart", index);
-      }
+  computed: {
+    subtotal: function () {
+      return this.total / 1.18;
     },
+    total: function () {
+      if (this.cart.length > 0) {
+        return this.cart.reduce(
+          (a, c) => a + c.product.precio * c.quantity,
+          this.cart[0].product.precio
+        );
+      }
+      return 0;
+    },
+    ...mapState(["cart"]),
   },
-  computed: mapState(["cart"]),
 };
 </script>
 

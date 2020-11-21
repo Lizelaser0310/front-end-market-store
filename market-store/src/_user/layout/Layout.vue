@@ -6,6 +6,15 @@
       <!--Navigation-->
       <v-layout-navigation />
       <router-view />
+
+      <v-snackbar v-model="isSnackbar">
+        {{ snackbarMessage }}
+        <template v-slot:action="{ attrs }">
+          <v-btn icon color="primary" v-bind="attrs" @click="isSnackbar = false"
+            ><v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-main>
     <!--Views-->
 
@@ -13,10 +22,14 @@
     <v-layout-footer />
   </v-app>
 </template>
+
 <script>
+import { mapState } from "vuex";
+
 import LayoutAppBar from "./AppBar.vue";
 import LayoutNavigation from "./Navigation.vue";
 import LayoutFooter from "./Footer.vue";
+
 export default {
   components: {
     "v-layout-app-bar": LayoutAppBar,
@@ -24,11 +37,19 @@ export default {
     "v-layout-footer": LayoutFooter,
   },
   data() {
-    return {};
+    return {
+      isSnackbar: false,
+    };
   },
   computed: {
     isNotMobile: function () {
       return this.$vuetify.breakpoint.mdAndUp;
+    },
+    ...mapState(["snackbarMessage", "snackbarCount"]),
+  },
+  watch: {
+    snackbarCount: function () {
+      this.isSnackbar = true;
     },
   },
 };

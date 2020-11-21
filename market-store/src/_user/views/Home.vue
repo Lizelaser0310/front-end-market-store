@@ -11,7 +11,7 @@
       >
       </v-carousel-item>
     </v-carousel>
-    <v-divider></v-divider>
+
     <v-card>
       <v-container>
         <v-row no-gutters>
@@ -53,36 +53,38 @@
         </v-row>
       </v-container>
     </v-card>
-    <h3>BOLSAS DE LA SEMANA</h3>
-    <v-divider></v-divider>
-    <div class="pl-4 pr-4 row">
-      <div
-        class="col-md-4 col-sm-4 col-xs-12"
-        v-for="canasta in canastas"
-        :key="canasta.id"
-      >
-        <v-card>
-          <v-img
-            :src="canasta.imagen"
-            class="white--text align-center"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="400px"
-          >
-            <div class="text-center">
-              <v-btn href="/suscripcion" class="white--text" outlined
-                >SUSCRIBIRSE</v-btn
-              >
-            </div>
-          </v-img>
-        </v-card>
-      </div>
-    </div>
 
     <v-container>
       <v-row no-gutters>
-        <v-col :cols="12">
+        <v-col cols="12">
+          <h3>Bolsas de la semana</h3>
+          <div class="pl-4 pr-4 row">
+            <div
+              class="col-md-4 col-sm-4 col-xs-12"
+              v-for="canasta in canastas"
+              :key="canasta.id"
+            >
+              <v-card>
+                <v-img
+                  :src="canasta.imagen"
+                  class="white--text align-center"
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                  height="400px"
+                >
+                  <div class="text-center">
+                    <v-btn href="/suscripcion" class="white--text" outlined
+                      >SUSCRIBIRSE</v-btn
+                    >
+                  </div>
+                </v-img>
+              </v-card>
+            </div>
+          </div>
+        </v-col>
+
+        <v-col cols="12">
           <v-card-text class tile outlined>
-            <v-card-title class="subheading">PRODUCTOS</v-card-title>
+            <v-card-title class="subheading">Productos</v-card-title>
             <v-divider></v-divider>
             <div class="row">
               <div
@@ -90,37 +92,40 @@
                 v-for="item in productos"
                 :key="item.id"
               >
-                <v-hover v-slot:default="{ hover }" open-delay="200">
-                  <v-card :elevation="hover ? 16 : 2">
-                    <v-img
-                      class="white--text align-end"
-                      height="200px"
-                      :src="item.imagen"
+                <v-card outlined width="400" elevation="2">
+                  <v-img height="275" :src="item.imagen" />
+
+                  <v-card-text class="text--primary text-center">
+                    {{ item.nombre }}
+                  </v-card-text>
+
+                  <div class="text-center">
+                    <v-btn
+                      @click="
+                        $store.commit('addToCart', {
+                          product: item,
+                          quantity: 1,
+                        })
+                      "
+                      class="ma-2"
+                      outlined
+                      color="info"
                     >
-                    </v-img>
-
-                    <v-card-text class="text--primary text-center">
-                      <div>{{ item.nombre }}</div>
-                    </v-card-text>
-
-                    <div class="text-center">
-                      <v-btn href="/tienda" class="ma-2" outlined color="info">
-                        <v-icon>mdi-cart</v-icon>
-                      </v-btn>
-                      <v-btn href="/tienda" class="ma-2" outlined color="info">
-                        <v-icon>mdi-cards-heart</v-icon>
-                      </v-btn>
-                      <v-btn
-                        :href="`/producto/${item.id}`"
-                        class="ma-2"
-                        outlined
-                        color="info"
-                      >
-                        <v-icon>mdi-eye</v-icon>
-                      </v-btn>
-                    </div>
-                  </v-card>
-                </v-hover>
+                      <v-icon>mdi-cart</v-icon>
+                    </v-btn>
+                    <v-btn href="/tienda" class="ma-2" outlined color="info">
+                      <v-icon>mdi-cards-heart</v-icon>
+                    </v-btn>
+                    <v-btn
+                      :href="`/producto/${item.id}`"
+                      class="ma-2"
+                      outlined
+                      color="info"
+                    >
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                  </div>
+                </v-card>
               </div>
             </div>
           </v-card-text>
