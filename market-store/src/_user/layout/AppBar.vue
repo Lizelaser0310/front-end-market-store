@@ -83,12 +83,12 @@
         </v-sheet>
       </v-dialog>
       <v-btn to="/deseados" icon style="margin-right: 10px">
-        <v-badge content="2" value="2" color="green" overlap>
+        <v-badge content="2" color="green" overlap>
           <v-icon>mdi-cards-heart</v-icon>
         </v-badge>
       </v-btn>
       <v-btn to="/carrito" icon style="margin-right: 10px">
-        <v-badge content="5" value="2" color="green" overlap>
+        <v-badge :content="cart.length" color="green" overlap>
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>
@@ -146,7 +146,10 @@ export default {
     ],
     requiredRule: (value) => !!value || "Este campo es requerido",
   }),
-  computed: { ...mapGetters(["isLoggedIn"]), ...mapState(["loginHelper"]) },
+  computed: {
+    ...mapGetters(["isLoggedIn"]),
+    ...mapState(["loginHelper", "cart"]),
+  },
   watch: {
     loginHelper: function (helper) {
       this.loginDialog = helper.require;

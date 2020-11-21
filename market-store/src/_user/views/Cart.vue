@@ -18,19 +18,27 @@
                 </tr>
               </thead>
               <tbody class="">
-                <tr v-for="(item, idx) in products" :key="item.id">
+                <tr v-for="(item, idx) in cart" :key="item.product.id">
                   <td class="text-center">
-                    <v-list-item key="1">
+                    <v-list-item>
+                      <v-list-item-avatar>
+                        <v-img
+                          class="imageProduct"
+                          :src="item.product.imagen"
+                        ></v-img>
+                      </v-list-item-avatar>
                       <v-list-item-content>
-                        <v-list-item-title>{{ item.nombre }}</v-list-item-title>
+                        <v-list-item-title>{{
+                          item.product.nombre
+                        }}</v-list-item-title>
                         <v-list-item-subtitle>{{
-                          item.descripcion
+                          item.product.descripcion
                         }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
                   </td>
                   <td class="text-center">
-                    {{ item.precio }}
+                    {{ item.product.precio }}
                   </td>
                   <td class="text-center">
                     <v-text-field
@@ -39,13 +47,13 @@
                       style="width: 80px"
                       single-line
                       outlined
-                      :value="item.cantidad"
+                      :value="item.quantity"
                       type="number"
                     >
                     </v-text-field>
                   </td>
                   <td class="text-center">
-                    {{ item.subtotal }}
+                    {{ item.product.precio * item.quantity }}
                   </td>
                   <td
                     class="text-center deleteProduct"
@@ -205,6 +213,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   data: () => ({
     rating: 4.5,
@@ -225,50 +234,15 @@ export default {
         href: "breadcrumbs_shirts",
       },
     ],
-    product: {
-      id: 3,
-      imagen: "P",
-      nombre: "Papaya",
-      descripcion: "Lorem Ipsum",
-      precio: 4,
-      cantidad: 1,
-      subtotal: 4,
-    },
-    products: [
-      {
-        id: 1,
-        imagen: "",
-        nombre: "Papa",
-        descripcion: "Lorem ipsun",
-        precio: 8,
-        cantidad: 1,
-        subtotal: 8,
-      },
-      {
-        id: 2,
-        imagen: "",
-        nombre: "Fresa",
-        descripcion: "Lorem ipsun",
-        precio: 10,
-        cantidad: 1,
-        subtotal: 10,
-      },
-    ],
   }),
   methods: {
-    funcAddTable: function () {
-      this.products.push(this.product);
-    },
     funcDeleteTable: function (index) {
       if (confirm("Are you sure you want to delete this item?")) {
-        this.products.splice(index, 1);
-        console.log(index);
+        this.$store.commit("removeToCart", index);
       }
     },
   },
-  mounted() {
-    this.funcAddTable();
-  },
+  computed: mapState(["cart"]),
 };
 </script>
 

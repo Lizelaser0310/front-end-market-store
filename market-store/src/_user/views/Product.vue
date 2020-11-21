@@ -39,6 +39,7 @@
           </p>
           <p class="title">CANTIDAD</p>
           <v-text-field
+            v-model="quantity"
             class="mb-8"
             outlined
             style="width: 120px"
@@ -49,7 +50,12 @@
             hide-details
           >
           </v-text-field>
-          <v-btn class="primary white--text" outlined tile dense
+          <v-btn
+            @click="addToCart"
+            class="primary white--text"
+            outlined
+            tile
+            dense
             ><v-icon>mdi-cart</v-icon> AGREGAR AL CARRITO</v-btn
           >
           <v-btn class="ml-4" outlined tile>AÑADIR A LA LISTA DE DESEOS</v-btn>
@@ -172,6 +178,7 @@ export default {
   data: () => ({
     rating: 4.5,
     item: 5,
+    cantidad: "1",
     related: [],
     product: {
       id: 0,
@@ -197,6 +204,12 @@ export default {
         `producto/tabla?categoria=${this.product.categoriaId}`
       );
       this.related = data.listado.filter((item) => item.id !== this.product.id);
+    },
+    addToCart: function () {
+      this.$store.commit("addToCart", {
+        product: this.product,
+        quantity: parseInt(this.quantity),
+      });
     },
   },
   mounted() {
