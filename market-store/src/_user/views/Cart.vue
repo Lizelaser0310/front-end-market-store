@@ -171,7 +171,7 @@
             </template>
           </v-simple-table>
           <div class="text-center">
-            <v-btn class="primary white--text mt-5" outlined
+            <v-btn class="primary white--text mt-5" to="/comprar" outlined
               >COMPRAR AHORA</v-btn
             >
           </div>
@@ -222,11 +222,11 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
+
 export default {
   data: () => ({
     rating: 4.5,
-    deliveryPrice: 5,
     breadcrums: [
       {
         text: "Home",
@@ -246,19 +246,8 @@ export default {
     ],
   }),
   computed: {
-    subtotal: function () {
-      return this.total / 1.18;
-    },
-    total: function () {
-      if (this.cart.length > 0) {
-        return this.cart.reduce(
-          (a, c) => a + c.product.precio * c.quantity,
-          this.cart[0].product.precio
-        );
-      }
-      return 0;
-    },
-    ...mapState(["cart"]),
+    ...mapState(["cart", "deliveryPrice"]),
+    ...mapGetters(["total", "subtotal"]),
   },
 };
 </script>

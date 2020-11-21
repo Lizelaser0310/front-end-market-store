@@ -9,6 +9,7 @@ export default new Vuex.Store({
         userJwt: localStorage.getItem("_userJwt"),
         user: undefined,
 
+        deliveryPrice: 5,
         cart: !localStorage.getItem("_cart") ? [] : JSON.parse(localStorage.getItem("_cart")),
         favorites: !localStorage.getItem("_favorites") ? [] : JSON.parse(localStorage.getItem("_favorites")),
 
@@ -48,6 +49,10 @@ export default new Vuex.Store({
             state.snackbarCount--;
             state.snackbarMessage = "Producto eliminado del carrito correctamente";
         },
+        clearCart(state) {
+            state.cart = [];
+            localStorage.setItem("_cart", JSON.stringify(state.cart))
+        },
 
         showSnackbar(state, message) {
             state.snackbarCount++;
@@ -56,5 +61,17 @@ export default new Vuex.Store({
     },
     getters: {
         isLoggedIn: (state) => !!state.userJwt && state.userJwt !== "",
+
+        total: function (state) {
+            if (state.cart.length > 0) {
+                return state.cart.reduce(
+                    (a, c) => a + c.product.precio * c.quantity,
+                    state.cart[0].product.precio
+                );
+            }
+            return 0;
+        },
+
+        subtotal: (state, getters) => getters.total / 1.18,
     }
 })

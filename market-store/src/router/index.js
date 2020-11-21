@@ -50,6 +50,9 @@ const routes = [
         path: '/deseados',
         name: 'Wishlist',
         component: () => import('../_user/views/Wishlist.vue'),
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: '/suscripcion',
@@ -72,6 +75,14 @@ const routes = [
         name: 'FAQ',
         component: () => import('../_user/views/FAQ.vue'),
       },
+      {
+        path: 'comprar',
+        name: 'Comprar',
+        component: () => import('../_user/views/Buy.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      }
     ]
   },
   {

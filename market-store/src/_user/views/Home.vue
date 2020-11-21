@@ -57,10 +57,13 @@
     <v-container>
       <v-row no-gutters>
         <v-col cols="12">
-          <h3>Bolsas de la semana</h3>
-          <div class="pl-4 pr-4 row">
-            <div
-              class="col-md-4 col-sm-4 col-xs-12"
+          <h3 class="py-4">Bolsas de la semana</h3>
+          <v-divider />
+          <v-row justify="center">
+            <v-col
+              cols="12"
+              sm="4"
+              md="3"
               v-for="canasta in canastas"
               :key="canasta.id"
             >
@@ -69,7 +72,7 @@
                   :src="canasta.imagen"
                   class="white--text align-center"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  height="400px"
+                  height="500"
                 >
                   <div class="text-center">
                     <v-btn href="/suscripcion" class="white--text" outlined
@@ -78,14 +81,14 @@
                   </div>
                 </v-img>
               </v-card>
-            </div>
-          </div>
+            </v-col>
+          </v-row>
         </v-col>
 
         <v-col cols="12">
           <v-card-text class tile outlined>
             <v-card-title class="subheading">Productos</v-card-title>
-            <v-divider></v-divider>
+            <v-divider />
             <div class="row">
               <div
                 class="col-12 col-md-3 col-sm-6 col-xs-6 text-center"

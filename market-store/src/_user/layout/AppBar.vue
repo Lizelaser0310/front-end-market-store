@@ -182,9 +182,16 @@ export default {
           if (status === 200) {
             this.$store.commit("login", data);
             this.$router.push(this.loginHelper.next);
+            this.$store.commit(
+              "showSnackbar",
+              "¡Ha iniciado sesión con éxito!"
+            );
           }
         } catch (e) {
-          console.log("Failed");
+          this.$store.commit(
+            "showSnackbar",
+            "No se pudo iniciar su sesión, compruebe que su usuario y contraseña sean correctos"
+          );
         } finally {
           this.loginLoading = false;
         }
@@ -195,6 +202,7 @@ export default {
         this.$router.push("/");
       }
       this.$store.commit("logout");
+      this.$store.commit("showSnackbar", "Ha cerrado sesión con éxito");
     },
   },
 };
