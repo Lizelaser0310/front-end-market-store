@@ -88,9 +88,15 @@
         </v-badge>
       </v-btn>
       <v-btn to="/carrito" icon style="margin-right: 10px">
-        <v-badge :content="cart.length" color="green" overlap>
+        <v-badge
+          v-if="cart.length > 0"
+          :content="cart.length"
+          color="green"
+          overlap
+        >
           <v-icon>mdi-cart</v-icon>
         </v-badge>
+        <v-icon v-else>mdi-cart</v-icon>
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute app temporary>

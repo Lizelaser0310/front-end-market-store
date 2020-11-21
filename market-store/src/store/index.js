@@ -9,7 +9,11 @@ export default new Vuex.Store({
         userJwt: localStorage.getItem("_userJwt"),
         user: undefined,
 
-        cart: !localStorage.getItem("_cart") ? [] : JSON.parse(localStorage.getItem("_cart"))
+        cart: !localStorage.getItem("_cart") ? [] : JSON.parse(localStorage.getItem("_cart")),
+        favorites: !localStorage.getItem("_favorites") ? [] : JSON.parse(localStorage.getItem("_favorites")),
+
+        snackbarCount: 0,
+        snackbarMessage: "Ocurrió un error en la operación"
     },
     mutations: {
         login(state, userJwt) {
@@ -35,10 +39,19 @@ export default new Vuex.Store({
             else {
                 state.cart[idx].quantity += payload.quantity;
             }
+            state.snackbarCount++;
+            state.snackbarMessage = "¡Producto agregado correctamente al carrito!";
         },
         removeToCart(state, index) {
             state.cart.splice(index, 1);
             localStorage.setItem("_cart", JSON.stringify(state.cart))
+            state.snackbarCount--;
+            state.snackbarMessage = "Producto eliminado del carrito correctamente";
+        },
+
+        showSnackbar(state, message) {
+            state.snackbarCount++;
+            state.snackbarMessage = message;
         }
     },
     getters: {

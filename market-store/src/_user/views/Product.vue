@@ -39,7 +39,7 @@
           </p>
           <p class="title">CANTIDAD</p>
           <v-text-field
-            v-model="quantity"
+            v-model="cantidad"
             class="mb-8"
             outlined
             style="width: 120px"
