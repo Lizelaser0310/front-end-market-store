@@ -51,7 +51,12 @@
           >
           </v-text-field>
           <v-btn
-            @click="addToCart"
+            @click="
+              $store.commit('addToCart', {
+                product: product,
+                quantity: parseInt(cantidad),
+              })
+            "
             class="primary white--text"
             outlined
             tile
@@ -204,12 +209,6 @@ export default {
         `producto/tabla?categoria=${this.product.categoriaId}`
       );
       this.related = data.listado.filter((item) => item.id !== this.product.id);
-    },
-    addToCart: function () {
-      this.$store.commit("addToCart", {
-        product: this.product,
-        quantity: parseInt(this.quantity),
-      });
     },
   },
   mounted() {

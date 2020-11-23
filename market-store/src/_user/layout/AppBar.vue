@@ -77,6 +77,13 @@
                 <v-btn color="primary" :loading="loginLoading" @click="login"
                   >Ingresar</v-btn
                 >
+                <v-btn
+                  class="ml-2"
+                  color="primary"
+                  to="/registro"
+                  @click="loginDialog = false"
+                  >Crear cuenta</v-btn
+                >
               </v-form>
             </v-col>
           </v-row>
@@ -111,17 +118,17 @@
           />
         </v-card-title>
         <v-card-text>
-        <v-list tile min-width="250">
-          <v-list-item
-            v-for="(item, index) in categorias"
-            :key="index"
-            :href="`/tienda?categoria=${item.id}`"
-            link
-            tile
-          >
-            <v-list-item-title>{{ item.denominacion }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
+          <v-list tile min-width="250">
+            <v-list-item
+              v-for="(item, index) in categorias"
+              :key="index"
+              :href="`/tienda?categoria=${item.id}`"
+              link
+              tile
+            >
+              <v-list-item-title>{{ item.denominacion }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
         </v-card-text>
         <v-expand-transition>
           <div v-show="show">
@@ -209,8 +216,8 @@ export default {
       this.paginator = data;
     },
   },
- 
- async mounted() {
+
+  async mounted() {
     const { data } = await this.$axios.get("/categoria");
     this.categorias = data;
     console.log(this.categorias);

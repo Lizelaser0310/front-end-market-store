@@ -82,7 +82,7 @@ const routes = [
         meta: {
           requiresAuth: true
         }
-      }
+      },
       {
         path: '/contacto',
         name: 'Contact',
