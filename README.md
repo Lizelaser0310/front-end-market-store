@@ -37,12 +37,13 @@
 
 
 ## Features
-List the ready features here:
+- Product search
 - Shopping cart
 - Checkout proccess
 - Product list with filters and ordering
 - Credit card and Paypal payment methods
 - Account creation and management
+- User directions with geolocalization
 - Order history
 - Wish list
 - Favorite products
@@ -50,7 +51,7 @@ List the ready features here:
 - Product packs by weeks
 
 ## Screenshots
-<!-- ![Example screenshot](./img/screenshot.png) -->
+![Screenshoot](./images/1.jpg)
 
 
 ## Setup
