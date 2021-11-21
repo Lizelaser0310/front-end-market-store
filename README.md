@@ -51,21 +51,51 @@
 - Product packs by weeks
 
 ## Screenshots
+
+### **Home**
 ![Screenshoot](./images/1.jpg)
+### **Cart**
+![Screenshoot](./images/10.jpg)
+### **Login**
+![Screenshoot](./images/4.jpg)
+### **Products**
+![Screenshoot](./images/7.jpg)
 
 
 ## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
 
-Proceed to describe how to install / setup one's local environment / get started with the project.
+### Requirements
+* You must have [Node.js](https://nodejs.org/), wich is tipically bundled with the [npm package manager](https://www.npmjs.com/)
+* You also must have [GIT](https://git-scm.com/) if you want to contribute to the project.
 
+### Get the repository locally
+First of all, clone the repository:
+
+```bash
+git clone git@github.com:lizelaser/front-end-market-store.git
+cd <path_to_project>
+```
+### Install dependencies
+Then you need to install the dependencies for the project:
+```bash
+npm install
+```
 
 ## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
 
-`write-your-code-here`
+### Build and launch for development
+Start a development server with hot-reload for development and launch the project on localhost:8080 (note that the development build is not optimized):
 
+```bash
+npm run serve
+```
+
+### Build and minifies for production
+Build the project in ready-to-serve minified and static files ind dist/ folder:
+
+```bash
+npm run build
+```
 
 ## Project Status
 Project is: _complete_
