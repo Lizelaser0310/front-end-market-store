@@ -15,10 +15,24 @@
 
 
 ## General Information
-- Organic food ecommerce.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
+
+The following project was developed based on market research to satisfy the need to obtain organic and healthy staple foods without leaving home in the population of Ayacucho, Peru.
+
+This research was executed with the [following survey](https://docs.google.com/forms/d/e/1FAIpQLSecQ-08M_RF1_4a8P1s0EPHft-T_plLXU_ymXtlFqfemmfdbw/viewform?fbclid=IwAR0Cloj6X2HDXETP4DTBOW6HfYmfKsH5LbyA1vYFx9koB_znbqA2ntLv0y8) using Google Forms. A total of 14 participants responded, the results of which are summarized in the following images:
+
+![Survey question](./images/research/1.png)
+![Survey question](./images/research/2.png)
+![Survey question](./images/research/3.png)
+![Survey question](./images/research/4.png)
+![Survey question](./images/research/5.png)
+![Survey question](./images/research/6.png)
+![Survey question](./images/research/7.png)
+![Survey question](./images/research/8.png)
+![Survey question](./images/research/9.png)
+![Survey question](./images/research/10.png)
+![Survey question](./images/research/11.png)
+![Survey question](./images/research/12.png)
+![Survey question](./images/research/13.png)
 
 ## Technologies Used
 
@@ -53,13 +67,13 @@
 ## Screenshots
 
 ### **Home**
-![Screenshoot](./images/1.jpg)
+![Screenshoot](./images/screenshots/1.jpg)
 ### **Cart**
-![Screenshoot](./images/10.jpg)
+![Screenshoot](./images/screenshots/10.jpg)
 ### **Login**
-![Screenshoot](./images/4.jpg)
+![Screenshoot](./images/screenshots/4.jpg)
 ### **Products**
-![Screenshoot](./images/7.jpg)
+![Screenshoot](./images/screenshots/7.jpg)
 
 
 ## Setup
@@ -98,12 +112,13 @@ npm run build
 ```
 
 ## Project Status
-Project is: _complete_
+
+[![Project Status: Inactive](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#active)
 
 ## Room for Improvement
 
 - Update Vue.js version to 3
-- Serve to production on a live environment
+- Publish a demo in a website
 
 To do:
 - Add more payment methods
