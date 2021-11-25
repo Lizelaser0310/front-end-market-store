@@ -20,19 +20,19 @@ The following project was developed based on market research to satisfy the need
 
 This research was executed with the [following survey](https://docs.google.com/forms/d/e/1FAIpQLSecQ-08M_RF1_4a8P1s0EPHft-T_plLXU_ymXtlFqfemmfdbw/viewform?fbclid=IwAR0Cloj6X2HDXETP4DTBOW6HfYmfKsH5LbyA1vYFx9koB_znbqA2ntLv0y8) using Google Forms. A total of 14 participants responded, the results of which are summarized in the following images:
 
-![Survey question](./images/research/1.png)
-![Survey question](./images/research/2.png)
-![Survey question](./images/research/3.png)
-![Survey question](./images/research/4.png)
-![Survey question](./images/research/5.png)
-![Survey question](./images/research/6.png)
-![Survey question](./images/research/7.png)
-![Survey question](./images/research/8.png)
-![Survey question](./images/research/9.png)
-![Survey question](./images/research/10.png)
-![Survey question](./images/research/11.png)
-![Survey question](./images/research/12.png)
-![Survey question](./images/research/13.png)
+<img alt="Survey question" src="./images/research/1.png" width="100%" />
+<img alt="Survey question" src="./images/research/2.png" width="100%" />
+<img alt="Survey question" src="./images/research/3.png" width="100%" />
+<img alt="Survey question" src="./images/research/4.png" width="100%" />
+<img alt="Survey question" src="./images/research/5.png" width="100%" />
+<img alt="Survey question" src="./images/research/6.png" width="100%" />
+<img alt="Survey question" src="./images/research/7.png" width="100%" />
+<img alt="Survey question" src="./images/research/8.png" width="100%" />
+<img alt="Survey question" src="./images/research/9.png" width="100%" />
+<img alt="Survey question" src="./images/research/10.png" width="100%" />
+<img alt="Survey question" src="./images/research/11.png" width="100%" />
+<img alt="Survey question" src="./images/research/12.png" width="100%" />
+<img alt="Survey question" src="./images/research/13.png" width="100%" />
 
 ## Technologies Used
 
@@ -118,11 +118,13 @@ npm run build
 ## Room for Improvement
 
 - Update Vue.js version to 3
-- Publish a demo in a website
+- Add more payment methods
+- Add delivery tracking option
+- Add smart product suggestions
 
 To do:
-- Add more payment methods
-- 
+- Publish a live demo in a website
+- Improve the search experience
 
 ## Contact
 Created by [@lizelaser](https://github.com/lizelaser) - feel free to contact me!
