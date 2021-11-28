@@ -1,6 +1,8 @@
 # Market Store
 > Free and responsive Ecommerce containing organic and ancestral products, shopping cart and checkout process. Free for personal and commercial use.
 
+Note:The backend repository can be accessed through the following link [https://github.com/lizelaser/descubre-back-end](https://github.com/lizelaser/market-store-back-end)
+
 ## Table of Contents
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
