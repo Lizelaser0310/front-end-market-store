@@ -88,7 +88,7 @@ This research was executed with the [following survey](https://docs.google.com/f
 First of all, clone the repository:
 
 ```bash
-git clone git@github.com:lizelaser/front-end-market-store.git
+git clone git@github.com:lizelaser/market-store-front-end.git
 cd <path_to_project>
 ```
 ### Install dependencies
